@@ -6,7 +6,7 @@ pipeline {
     }
 	
     stages {
-        stage ('Compile Stage 2022-01') {
+        stage ('Compile Stage') {
 
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
@@ -15,7 +15,7 @@ pipeline {
             }
         }
 
-        stage ('Testing Stage 2022-01') {
+        stage ('Testing Stage') {
 
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
@@ -24,30 +24,22 @@ pipeline {
             }
         }
 
-		 stage ('sonarQube Analysis') {
-			steps {
-				withSonarQubeEnv('sonarQube') {
-					bat 'mvn clean verify sonar:sonar -Dsonar.projectKey=Spring-Delivery3'
-				}
-			}
-		}
-
-        stage ('package Stage') {
+        stage ('Package Stage') {
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
                     bat 'mvn package'
                 }
             }
         }
-		/* // Descomentar cuando se tenga instalado en Tomcat
-		stage('Deploy tomcat') {
+
+		stage('Deployment stage') {
             steps {
-                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} direcion ${env.WORKSPACE}"	
+                echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL} direction ${env.WORKSPACE}"
                 withMaven(maven : 'MAVEN_3_6_3') {
-					bat '"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe" -T ".\\target\\sistema-ventas-spring.war" "http://tomcat:tomcat@localhost:9090/manager/text/deploy?path=/sistema-ventas-spring&update=true"'
+					bat '"C:\\Program Files\\Git\\mingw64\\bin\\curl.exe" -T ".\\target\\sistema-ventas-spring.war" "http://deployer:orive@localhost:8080/manager/text/deploy?path=/sistema-ventas-spring&update=true"'
                 } 
             }
-        }*/
+        }
 
     }
 }
