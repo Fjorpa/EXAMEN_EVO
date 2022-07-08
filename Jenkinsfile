@@ -6,7 +6,7 @@ pipeline {
     }
 	
     stages {
-        stage ('Compile Stage') {
+        stage ('Compile Stage 07/07/2022') {
 
             steps {
                 withMaven(maven : 'MAVEN_3_6_3') {
